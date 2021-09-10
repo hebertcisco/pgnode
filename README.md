@@ -58,7 +58,7 @@ Or you can use import:
 ```js
 import pg from "pgnode";
 ```
-## Use
+## Use tx
 
 This is the simplest possible way to connect, query, and disconnect with async/await:
 
@@ -85,6 +85,69 @@ client.query("SELECT $1::text as message", ["Hello world!"], (err, res) => {
 
 Our real-world apps are almost always more complicated than that, and I urge you to read on!
 
+## Usage
+
+```Typescript
+import tx from `pgnode`
+
+const pg = new Pool()
+
+await tx(pg, async (db) => {
+  await db.query(`UPDATE accounts SET money = money - 50 WHERE name = 'bob'`)
+  await db.query(`UPDATE accounts SET money = money + 50 WHERE name = 'alice'`)
+})
+
+await tx(pg, async (db) => {
+  await db.query(`UPDATE accounts SET money = money - 50 WHERE name = 'bob'`)
+  await db.query(`UPDATE accounts SET money = money + 50 WHERE name = 'debbie'`)
+
+  // Any errors thrown inside the callback will terminate the transaction
+  throw new Error(`screw Debbie`)
+})
+
+// You can also use it with other packages that use Pool or PoolClient, like pgtyped
+import { sql } from '@pgtyped/query'
+
+const updateAccount = sql<IUpdateAccountQuery>`
+  UPDATE accounts
+  SET money = momey + $delta
+  WHERE name = $name
+`
+
+await tx(pg, async(db) => {
+  await udpateAccount.run({ name: 'bob', delta: -50 })
+  await udpateAccount.run({ name: 'charlie', delta: 50 })
+})
+
+```
+
+However, this approach contains a subtle bug, because the `client` it passes to the callback stays valid after transaction finishes (successfully or not), and can be unknowingly used. In essence, it's a variation of use-after-free bug, but with database clients instead of memory.
+
+Here's a demonstration of code that can trigger this condition:
+
+```Typescript
+async function failsQuickly(db: PoolClient) {
+  await db.query(`This query has an error`)
+}
+
+async function executesSlowly(db: PoolClient) {
+  // Takes a couple of seconds to complete
+  await externalApiCall()
+  // This operation will be executed OUTSIDE of transaction block!
+  await db.query(`
+    UPDATE external_api_calls 
+    SET amount = amount + 1 
+    WHERE service = 'some_service'
+  `)
+}
+
+await tx(pg, async (db) => {
+  await Promise.all([
+    failsQuickly(db),
+    executesSlowly(db)
+  ])
+})
+```
 
 # Features
 
