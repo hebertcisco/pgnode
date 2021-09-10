@@ -51,6 +51,24 @@
   "bugs": {
     "url": "https://github.com/hebertcisco/pgnode/issues"
   },
+  "rules": {
+    "node/no-unpublished-import": [
+      "error",
+      {
+        "convertPath": {
+          "src/**/*.jsx": [
+            "^src/(.+?)\\.jsx$",
+            "lib/$1.js"
+          ]
+        },
+        "tryExtensions": [
+          ".js",
+          ".jsx",
+          ".json"
+        ]
+      }
+    ]
+  },
   "homepage": "https://github.com/hebertcisco/pgnode#readme",
   "devDependencies": {
     "@types/jest": "^26.0.15",
