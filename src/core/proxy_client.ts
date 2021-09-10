@@ -114,7 +114,7 @@ export class ProxyClient implements PoolClient {
 
     connect(): Promise<void>
     connect(callback: (err: Error) => void): void
-    connect(_?: any): any {
+    connect(): any {
         throw new Error(`proxy client cannot connect`)
     }
 
