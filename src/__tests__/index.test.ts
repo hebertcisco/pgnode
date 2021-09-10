@@ -1,5 +1,5 @@
-import message from '../index';
+import pg from '../index';
 
 it('Works', () => {
-  expect(message).toBe('This module must not be required!');
+  expect(pg.types);
 });
