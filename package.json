@@ -57,13 +57,15 @@
       {
         "convertPath": {
           "src/**/*.jsx": [
-            "^src/(.+?)\\.jsx$",
+            "^src/(.+?)\\.ts$",
             "lib/$1.js"
           ]
         },
         "tryExtensions": [
           ".js",
           ".jsx",
+          ".ts",
+          ".tsx",
           ".json"
         ]
       }
