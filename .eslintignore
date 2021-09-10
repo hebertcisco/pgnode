@@ -6,3 +6,4 @@ lib
 
 # don't lint nyc coverage output
 coverage
+src/core/proxy_client.ts
