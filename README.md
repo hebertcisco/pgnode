@@ -88,7 +88,8 @@ Our real-world apps are almost always more complicated than that, and I urge you
 ## Usage
 
 ```Typescript
-import tx from `pgnode`
+import { tx } from `pgnode`
+import pg from `pgnode`
 
 const pg = new Pool()
 
