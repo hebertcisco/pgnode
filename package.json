@@ -1,7 +1,7 @@
 {
-  "name": "ts-npm-package-boilerplate",
-  "version": "0.1.0",
-  "description": "TypeScript NPM Module Boilerplate",
+  "name": "pgnode",
+  "version": "0.0.6",
+  "description": "PostgresSQL client to Nodejs servers",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -16,31 +16,69 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix"
+  },
+  "jest": {
+    "testRegex": "(/tests/.*|(\\.|/)test)\\.tsx?$",
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "maxConcurrency": 50,
+    "testTimeout": 60000
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hebertcisco/ts-npm-package-boilerplate.git"
+    "url": "git+https://github.com/hebertcisco/pgnode.git"
   },
   "keywords": [
-    "boilerplate",
-    "typescript"
+    "pg",
+    "postgres",
+    "connection",
+    "transaction",
+    "savepoint",
+    "database",
+    "db",
+    "tx"
   ],
   "author": "Hebert Cisco",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hebertcisco/ts-npm-package-boilerplate/issues"
+    "url": "https://github.com/hebertcisco/pgnode/issues"
   },
-  "homepage": "https://github.com/hebertcisco/ts-npm-package-boilerplate#readme",
+  "homepage": "https://github.com/hebertcisco/pgnode#readme",
   "devDependencies": {
     "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.41",
+    "@types/pg": "^7.14.11",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
+    "env-cmd": "^10.1.0",
     "eslint": "^7.11.0",
     "eslint-plugin-jest": "^24.1.0",
     "jest": "^26.6.0",
+    "lint-staged": "^10.5.4",
+    "husky": "^6.0.0",
+    "pg-protocol": "^1.5.0",
     "ts-jest": "^26.4.1",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "prettier": "^2.2.1",
+    "ts-mockito": "^2.6.1"
   },
   "files": [
     "lib/**/*"
-  ]
+  ],
+  "dependencies": {
+    "pg": "^8.7.1"
+  }
 }
