@@ -86,7 +86,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-promise": "6.0.0",
-    "husky": "6.0.0",
+    "husky": "7.0.4",
     "jest": "27.4.5",
     "lint-staged": "10.5.4",
     "pg-protocol": "1.5.0",
