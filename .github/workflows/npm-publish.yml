@@ -33,4 +33,4 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: git push
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.GHP_TOKEN }}
