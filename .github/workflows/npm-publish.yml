@@ -1,0 +1,37 @@
+name: NPM publish CD workflow
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.release.target_commitish }}
+      # install Node.js
+      - name: Use Node.js 12
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+      - run: yarn install
+      # set up git since we will later push to the repo
+      - run: git config --global user.name "hebertcisco"
+      - run: git config --global user.email "hebertcisco@outlook.com"
+      # upgrade npm version in package.json to the tag used in the release.
+      - run: npm version ${{ github.event.release.tag_name }}
+      # build the project
+      - run: npm run build
+      # run tests just in case
+      - run: npm test
+      - run: npm config set '//registry.npmjs.org/:_authToken' "${{ secrets.NPM_TOKEN }}"
+      # publish to NPM -> there is one caveat, continue reading for the fix
+      - run: npm publish --tag ${{ github.event.release.target_commitish }}
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: git push
+        env:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
