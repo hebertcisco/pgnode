@@ -23,8 +23,6 @@
   <a href="https://github.com/hebertcisco/musiko-app/issues/new/choose">Request Feature</a>
   </p>
 
-  
-
 <p align="center">Did you like the project? Please, considerate <a href="https://www.buymeacoffee.com/hebertcisco">a donation</a> to help improve!</p>
 
 <p align="center"><strong>PostgresSQL client to Nodejs servers</strong>✨</p>
@@ -50,23 +48,24 @@ yarn add pgnode
 Now in your project just import the module like this:
 
 ```js
-const pg = require("pgnode");
+const pg = require('pgnode');
 ```
 
 Or you can use import:
 
 ```js
-import pg from "pgnode";
+import pg from 'pgnode';
 ```
+
 ## Use tx
 
 This is the simplest possible way to connect, query, and disconnect with async/await:
 
 ```js
-const { Client } = require("pgnode");
+const { Client } = require('pgnode');
 const client = new Client();
 await client.connect();
-const res = await client.query("SELECT $1::text as message", ["Hello world!"]);
+const res = await client.query('SELECT $1::text as message', ['Hello world!']);
 console.log(res.rows[0].message); // Hello world!
 await client.end();
 ```
@@ -74,10 +73,10 @@ await client.end();
 And here's the same thing with callbacks:
 
 ```js
-const { Client } = require("pgnode");
+const { Client } = require('pgnode');
 const client = new Client();
 client.connect();
-client.query("SELECT $1::text as message", ["Hello world!"], (err, res) => {
+client.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
   console.log(err ? err.stack : res.rows[0].message); // Hello World!
   client.end();
 });
@@ -136,8 +135,8 @@ async function executesSlowly(db: PoolClient) {
   await externalApiCall()
   // This operation will be executed OUTSIDE of transaction block!
   await db.query(`
-    UPDATE external_api_calls 
-    SET amount = amount + 1 
+    UPDATE external_api_calls
+    SET amount = amount + 1
     WHERE service = 'some_service'
   `)
 }
