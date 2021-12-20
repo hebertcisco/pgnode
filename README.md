@@ -28,7 +28,21 @@
   <a href="https://github.com/hebertcisco/musiko-app/issues/new/choose">Report Bug</a>
   <a href="https://github.com/hebertcisco/musiko-app/issues/new/choose">Request Feature</a>
   </p>
-
+ <h3 align="center">Systems on which it has been tested.</h3>
+ <p align="center">
+    <a href="https://ubuntu.com/download">
+      <img alt="Ubuntu" src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white&style=flat" />
+    </a>
+  <a href="https://alpinelinux.org/">
+      <img alt="Alpine_Linux" src="https://img.shields.io/badge/Alpine_Linux-0D597F?style=for-the-badge&logo=alpine-linux&logoColor=white&style=flat" />
+    </a>
+  <a href="https://www.debian.org/index.pt.html">
+      <img alt="Debian" src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=debian&logoColor=white&style=flat" />
+    </a>
+  <a href="https://www.centos.org/">
+      <img alt="CentOS" src="https://img.shields.io/badge/Cent%20OS-262577?style=for-the-badge&logo=CentOS&logoColor=white&style=flat" />
+    </a>
+  </p>
 <p align="center">Did you like the project? Please, considerate <a href="https://www.buymeacoffee.com/hebertcisco">a donation</a> to help improve!</p>
 
 <p align="center"><strong>PostgresSQL client to Nodejs servers</strong>✨</p>
