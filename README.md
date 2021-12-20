@@ -17,6 +17,9 @@
     <a href="https://github.com/hebertcisco/pgnode">
       <img alt="GitHub Total Downloads" src="https://img.shields.io/npm/dt/pgnode?color=336791&label=Total%20downloads" />
     </a>
+  <a href="https://github.com/hebertcisco/bvmf">
+      <img alt="GitHub release" src="https://img.shields.io/github/release/hebertcisco/bvmf.svg" />
+    </a>
     <br />
     <br />
   <a href="https://github.com/hebertcisco/musiko-app/issues/new/choose">Report Bug</a>
