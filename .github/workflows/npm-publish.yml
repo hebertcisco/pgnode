@@ -1,33 +1,36 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
-
-name: Node.js Package
+name: NPM publish CD workflow
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: npm test
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
         with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
+          ref: ${{ github.event.release.target_commitish }}
+      # install Node.js
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: yarn install
+      # set up git since we will later push to the repo
+      - run: git config --global user.name "hebertcisco"
+      - run: git config --global user.email "hebertcisco@outlook.com"
+      # upgrade npm version in package.json to the tag used in the release.
+      - run: npm version ${{ github.event.release.tag_name }}
+      # build the project
+      - run: npm run build
+      # run tests just in case
+      - run: npm test
+      - run: npm config set '//registry.npmjs.org/:_authToken' "${{ secrets.NPM_TOKEN }}"
+      # publish to NPM -> there is one caveat, continue reading for the fix
+      - run: npm publish --tag ${{ github.event.release.target_commitish }}
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: git push
+          github-token: ${{ secrets.GITHUB_TOKEN }}
