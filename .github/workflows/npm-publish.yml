@@ -30,7 +30,7 @@ jobs:
       - run: npm config set '//registry.npmjs.org/:_authToken' "${{ secrets.NPM_TOKEN }}"
       # publish to NPM -> there is one caveat, continue reading for the fix
       - run: npm publish --tag ${{ github.event.release.target_commitish }}
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: git push
           github-token: ${{ secrets.GITHUB_TOKEN }}
