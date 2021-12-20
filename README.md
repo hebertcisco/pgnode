@@ -18,7 +18,10 @@
       <img alt="GitHub Total Downloads" src="https://img.shields.io/npm/dt/pgnode?color=336791&label=Total%20downloads" />
     </a>
   <a href="https://github.com/hebertcisco/pgnode">
-      <img alt="GitHub release" src="https://img.shields.io/github/release/hebertcisco/pgnode.svg" />
+      <img alt="GitHub release" src="https://img.shields.io/github/release/hebertcisco/pgnode.svg?style=flat&color=336791" />
+    </a>
+  <a href="https://www.npmjs.com/package/pg">
+      <img alt="dependency pg" src="https://img.shields.io/github/package-json/dependency-version/hebertcisco/pgnode/pg?style=flat&color=336791" />
     </a>
     <br />
     <br />
