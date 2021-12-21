@@ -1,6 +1,6 @@
 {
   "name": "pgnode",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "PostgresSQL client to Nodejs servers",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
