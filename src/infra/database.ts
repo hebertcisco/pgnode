@@ -1,4 +1,4 @@
-import pg, { Client, Pool } from '../index';
+import pg from '../index';
 
 const config = {
     user: process.env.POSTGRES_USER,
@@ -7,6 +7,6 @@ const config = {
     password: process.env.POSTGRES_PASSWORD,
     port: Number(process.env.POSTGRES_PORT)
 };
-const client = new pg.Client({...config});
+const client = new pg.Client({ ...config });
 
 export { client };
