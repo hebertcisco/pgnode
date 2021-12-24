@@ -10,4 +10,4 @@ export type PgType = {
     types: typeof types;
 };
 
-export type UnknownType = any | unknown | undefined | null;
+export type UnknownType = unknown | undefined | null;
