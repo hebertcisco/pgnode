@@ -2,7 +2,6 @@
  <img width="100px" src="https://raw.githubusercontent.com/hebertcisco/pgnode/main/.github/images/favicon512x512-postgresql.png" align="center" alt=":package: postgresql" />
  <h2 align="center">:package: pgnode</h2>
  <p align="center">PostgresSQL client to Nodejs servers</p>
-</p>
 
   <p align="center">
     <a href="https://github.com/hebertcisco/pgnode/issues">
@@ -17,11 +16,24 @@
     <a href="https://github.com/hebertcisco/pgnode">
       <img alt="GitHub Total Downloads" src="https://img.shields.io/npm/dt/pgnode?color=336791&label=Total%20downloads" />
     </a>
+ <br />
+    <br />
   <a href="https://github.com/hebertcisco/pgnode">
       <img alt="GitHub release" src="https://img.shields.io/github/release/hebertcisco/pgnode.svg?style=flat&color=336791" />
     </a>
   <a href="https://www.npmjs.com/package/pg">
       <img alt="dependency pg" src="https://img.shields.io/github/package-json/dependency-version/hebertcisco/pgnode/pg?style=flat&color=336791" />
+    </a>
+ <br />
+    <br />
+ <a href="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-macos.yml">
+      <img alt="Node.js CI on Darwin" src="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-macos.yml/badge.svg" />
+    </a>
+  <a href="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-ubuntu.yml">
+      <img alt="Node.js CI on Ubuntu" src="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-ubuntu.yml/badge.svg" />
+    </a>
+ <a href="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-windows.yml">
+      <img alt="Node.js CI on Windows" src="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-windows.yml/badge.svg" />
     </a>
     <br />
     <br />
@@ -36,11 +48,21 @@
   <a href="https://alpinelinux.org/">
       <img alt="Alpine_Linux" src="https://img.shields.io/badge/Alpine_Linux-0D597F?style=for-the-badge&logo=alpine-linux&logoColor=white&style=flat" />
     </a>
+ <br />
+    <br />
   <a href="https://www.debian.org/index.pt.html">
       <img alt="Debian" src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=debian&logoColor=white&style=flat" />
     </a>
   <a href="https://www.centos.org/">
       <img alt="CentOS" src="https://img.shields.io/badge/Cent%20OS-262577?style=for-the-badge&logo=CentOS&logoColor=white&style=flat" />
+    </a>
+ <br />
+    <br />
+  <a href="https://www.microsoft.com/pt-br/windows/">
+      <img alt="Windows" src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white&style=flat" />
+    </a>
+ <a href="https://www.apple.com/br/macos/">
+      <img alt="Macos" src="https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white&style=flat" />
     </a>
   </p>
 <p align="center">Did you like the project? Please, considerate <a href="https://www.buymeacoffee.com/hebertcisco">a donation</a> to help improve!</p>
@@ -68,105 +90,88 @@ yarn add pgnode
 Now in your project just import the module like this:
 
 ```js
-const pg = require('pgnode');
+const pg = require("pgnode");
 ```
 
 Or you can use import:
 
 ```js
-import pg from 'pgnode';
+import pg from "pgnode";
 ```
 
-## Use tx
+## Client connection
 
 This is the simplest possible way to connect, query, and disconnect with async/await:
 
-```js
-const { Client } = require('pgnode');
-const client = new Client();
-await client.connect();
-const res = await client.query('SELECT $1::text as message', ['Hello world!']);
-console.log(res.rows[0].message); // Hello world!
-await client.end();
+```ts
+import pg, { Client, Pool } from "pgnode";
+
+const config = {
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DATABASE,
+  password: process.env.POSTGRES_PASSWORD,
+  port: Number(process.env.POSTGRES_PORT),
+};
+
+const client = new pg.Client({ ...config });
+
+function query(sql, params) {
+  return client
+    .connect()
+    .then(() => client.query(sql, params))
+    .then((res) => {
+      client.end();
+      return res;
+    });
+}
 ```
 
-And here's the same thing with callbacks:
-
-```js
-const { Client } = require('pgnode');
-const client = new Client();
-client.connect();
-client.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
-  console.log(err ? err.stack : res.rows[0].message); // Hello World!
-  client.end();
-});
-```
-
-Our real-world apps are almost always more complicated than that, and I urge you to read on!
+# Transactions (tx)
 
 ## Usage
 
 ```Typescript
-import { tx } from `pgnode`
-import pg from `pgnode`
+import {tx, Client, Pool} from 'pgnode';
 
-const pg = new Pool()
+const client = new Client({
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DATABASE,
+  password: process.env.POSTGRES_PASSWORD,
+  port: Number(process.env.POSTGRES_PORT)
+});
 
-await tx(pg, async (db) => {
-  await db.query(`UPDATE accounts SET money = money - 50 WHERE name = 'bob'`)
-  await db.query(`UPDATE accounts SET money = money + 50 WHERE name = 'alice'`)
-})
+const pool = new Pool({...client});
 
-await tx(pg, async (db) => {
-  await db.query(`UPDATE accounts SET money = money - 50 WHERE name = 'bob'`)
-  await db.query(`UPDATE accounts SET money = money + 50 WHERE name = 'debbie'`)
-
-  // Any errors thrown inside the callback will terminate the transaction
-  throw new Error(`screw Debbie`)
-})
-
-// You can also use it with other packages that use Pool or PoolClient, like pgtyped
-import { sql } from '@pgtyped/query'
-
-const updateAccount = sql<IUpdateAccountQuery>`
-  UPDATE accounts
-  SET money = momey + $delta
-  WHERE name = $name
-`
-
-await tx(pg, async(db) => {
-  await udpateAccount.run({ name: 'bob', delta: -50 })
-  await udpateAccount.run({ name: 'charlie', delta: 50 })
-})
-
-```
-
-However, this approach contains a subtle bug, because the `client` it passes to the callback stays valid after transaction finishes (successfully or not), and can be unknowingly used. In essence, it's a variation of use-after-free bug, but with database clients instead of memory.
-
-Here's a demonstration of code that can trigger this condition:
-
-```Typescript
-async function failsQuickly(db: PoolClient) {
-  await db.query(`This query has an error`)
+export async function createTable(){
+  return await tx(pool, async (db) => {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS test
+      (
+        id   SERIAL PRIMARY KEY,
+        name TEXT NOT NULL
+      );`);
+  });
 }
 
-async function executesSlowly(db: PoolClient) {
-  // Takes a couple of seconds to complete
-  await externalApiCall()
-  // This operation will be executed OUTSIDE of transaction block!
-  await db.query(`
-    UPDATE external_api_calls
-    SET amount = amount + 1
-    WHERE service = 'some_service'
-  `)
-}
+// or use a generator function to create the transactions
 
-await tx(pg, async (db) => {
-  await Promise.all([
-    failsQuickly(db),
-    executesSlowly(db)
-  ])
-})
+export function* createTableGenerator(){
+  yield tx(pool, async (db) => {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS test
+      (
+        id   SERIAL PRIMARY KEY,
+        name TEXT NOT NULL
+      );`);
+  });
+  // create another transaction
+  yield tx(pool, async (db) => {
+    await db.query(`
+      INSERT INTO test (name) VALUES ('test');`);
+  });
+}
 ```
 
 # Features
@@ -182,3 +187,7 @@ await tx(pg, async (db) => {
   - Bulk import & export with `COPY TO/COPY FROM`
   - Change default database name
   - make pg.Pool an es6 class
+  - `pg.Client` and `pg.Pool` are ES6 classes
+  - Support for `pg.Client.prototype.query` and `pg.Pool.prototype.query`
+  - Support generator functions
+  - Support for Nodejs `^v16x`
