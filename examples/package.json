@@ -1,0 +1,16 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "start": "nodemon index.ts"
+  },
+  "keywords": ["postgres"],
+  "author": "Hebert Cisco",
+  "license": "ISC",
+  "dependencies": {
+    "pgnode": "latest"
+  }
+}
