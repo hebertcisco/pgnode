@@ -633,10 +633,10 @@
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
-"@types/node@*", "@types/node@16.11.20":
-  version "16.11.20"
-  resolved "https://registry.npmjs.org/@types/node/-/node-16.11.20.tgz"
-  integrity sha512-lAKaZ0Lc1Umwd0AqLr6iy5U8u/1DpK7/JzNgQn9cMMUk2mFR8bbhEP8BQrI9Cm5CU0bOVCaWbkGBvgqKMOJHsw==
+"@types/node@*", "@types/node@16.11.21":
+  version "16.11.21"
+  resolved "https://registry.npmjs.org/@types/node/-/node-16.11.21.tgz"
+  integrity sha512-Pf8M1XD9i1ksZEcCP8vuSNwooJ/bZapNmIzpmsMaL+jMI+8mEYU3PKvs+xDNuQcJWF/x24WzY4qxLtB0zNow9A==
 
 "@types/pg@8.6.4":
   version "8.6.4"
