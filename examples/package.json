@@ -3,14 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "node index.js",
+    "test": "node .",
     "start": "nodemon index.ts"
   },
-  "keywords": ["postgres"],
+  "keywords": [
+    "postgres"
+  ],
   "author": "Hebert Cisco",
   "license": "ISC",
   "dependencies": {
     "pgnode": "latest"
+  },
+  "devDependencies": {
+    "dotenv": "^14.2.0",
+    "@types/dotenv": "^8.2.0"
   }
 }
