@@ -1,32 +1,26 @@
 import dotenv from 'dotenv';
 import url from 'url';
 
-import pgnode, {tx} from '../lib/index.js';
+import pgnode, { tx } from '../lib/index.js';
 
 dotenv.config();
 
-const {
-  POSTGRES_USER,
-  POSTGRES_HOST,
-  POSTGRES_DATABASE,
-  POSTGRES_PASSWORD,
-  POSTGRES_PORT
-} = process.env;
+const { POSTGRES_USER, POSTGRES_HOST, POSTGRES_DATABASE, POSTGRES_PASSWORD, POSTGRES_PORT } = process.env;
 
 const postgresUrl = url.format({
-  protocol : 'postgres',
-  slashes : true,
-  auth : `${POSTGRES_USER}:${POSTGRES_PASSWORD}`,
-  hostname : POSTGRES_HOST,
-  port : POSTGRES_PORT,
-  pathname : POSTGRES_DATABASE,
+  protocol: 'postgres',
+  slashes: true,
+  auth: `${POSTGRES_USER}:${POSTGRES_PASSWORD}`,
+  hostname: POSTGRES_HOST,
+  port: POSTGRES_PORT,
+  pathname: POSTGRES_DATABASE,
 });
 
 const client = new pgnode.Client({
-  connectionString : postgresUrl,
+  connectionString: postgresUrl,
 });
 
-const pool = new pgnode.Pool({...client});
+const pool = new pgnode.Pool({ ...client });
 
 export async function createTable() {
   return await tx(pool, async (db) => {
