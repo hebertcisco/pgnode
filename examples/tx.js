@@ -1,4 +1,4 @@
-import pgnode, { tx } from 'pgnode';
+import pgnode, { tx } from '../lib/index.js';
 import dotenv from 'dotenv';
 import url from 'url';
 
