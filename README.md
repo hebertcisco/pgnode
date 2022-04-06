@@ -26,16 +26,6 @@
     </a>
  <br />
     <br />
- <a href="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-macos.yml">
-      <img alt="Node.js CI on Darwin" src="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-macos.yml/badge.svg" />
-    </a>
-  <a href="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-ubuntu.yml">
-      <img alt="Node.js CI on Ubuntu" src="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-ubuntu.yml/badge.svg" />
-    </a>
- <a href="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-windows.yml">
-      <img alt="Node.js CI on Windows" src="https://github.com/hebertcisco/pgnode/actions/workflows/node.js-windows.yml/badge.svg" />
-    </a>
-    <br />
     <br />
   <a href="https://github.com/hebertcisco/musiko-app/issues/new/choose">Report Bug</a>
   <a href="https://github.com/hebertcisco/musiko-app/issues/new/choose">Request Feature</a>
