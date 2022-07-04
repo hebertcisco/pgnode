@@ -1,4 +1,4 @@
-import { Client, ClientBase, Connection, Events, Pool, Query, native, types } from 'pg';
+import type { Client, ClientBase, Connection, Events, Pool, Query, native, types } from 'pg';
 export type PgType = {
   Client: typeof Client;
   ClientBase: typeof ClientBase;
