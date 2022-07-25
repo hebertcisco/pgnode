@@ -9,28 +9,20 @@ const client = new Client({
 });
 
 const pool = new Pool({...client});
-
+const rawSQL = `CREATE TABLE IF NOT EXISTS test
+(id   SERIAL PRIMARY KEY,
+ name TEXT NOT NULL);`
 export async function createTable(){
     return await tx(pool, async (db) => {
-        await db.query(`
-      CREATE TABLE IF NOT EXISTS test
-      (
-        id   SERIAL PRIMARY KEY,
-        name TEXT NOT NULL
-      );`);
+        await db.query(rawSQL);
     });
 }
 
 // or use a generator function to create the transactions
 
-export function* createTableGenerator(){
+export async function* createTableGenerator(){
     yield tx(pool, async (db) => {
-        await db.query(`
-      CREATE TABLE IF NOT EXISTS test
-      (
-        id   SERIAL PRIMARY KEY,
-        name TEXT NOT NULL
-      );`);
+        await db.query(rawSQL);
     });
     // create another transaction
     yield tx(pool, async (db) => {

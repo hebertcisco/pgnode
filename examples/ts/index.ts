@@ -1,6 +1,10 @@
 import { createTableGenerator, createTable } from './tx';
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 (async ()=>{
-    await createTableGenerator();
+    await createTableGenerator().next();
     await createTable();
-});
+})();

@@ -1,0 +1,23 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.cjs",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node .",
+    "start": "nodemon index.ts"
+  },
+  "keywords": [
+    "postgres"
+  ],
+  "author": "Hebert Cisco",
+  "license": "ISC",
+  "dependencies": {
+    "pgnode": "latest"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.1",
+    "nodemon": "^2.0.19"
+  }
+}
